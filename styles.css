@@ -1,0 +1,109 @@
+body {
+    background: linear-gradient(180deg, #1a0b2e 0%, #0d0518 100%);
+    color: #fff;
+    font-family: 'Press Start 2P', cursive;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    overflow: auto;
+    transition: background-color 0.1s ease; /* Smooth flash transitions */
+}
+
+h1 {
+    font-size: 48px;
+    color: #ff00ff;
+    text-shadow: 4px 4px 0 #00ffff, -4px -4px 0 #00ffff;
+    margin: 20px 0;
+    letter-spacing: 4px;
+}
+
+.sequencer {
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+    border: 4px solid #00ffff;
+    padding: 10px;
+    background-color: #2a1a3d;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+.row {
+    display: flex;
+}
+
+.cell {
+    width: 50px;
+    height: 50px;
+    border: 2px solid #666;
+    background-color: #333;
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+.cell.on {
+    background-color: #ff00ff;
+}
+
+.cell.playing {
+    background-color: #00ff00;
+    box-shadow: 0 0 10px #00ff00;
+}
+
+.controls {
+    margin: 20px;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+button {
+    font-family: 'Press Start 2P', cursive;
+    font-size: 16px;
+    padding: 10px 20px;
+    background-color: #333;
+    color: #00ffff;
+    border: 2px solid #00ffff;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+button:hover {
+    background-color: #00ffff;
+    color: #1a0b2e;
+}
+
+label {
+    font-size: 14px;
+    color: #00ffff;
+}
+
+input[type="number"] {
+    font-family: 'Press Start 2P', cursive;
+    width: 60px;
+    padding: 5px;
+    background-color: #333;
+    color: #ff00ff;
+    border: 2px solid #ff00ff;
+    text-align: center;
+}
+
+/* Flash effects */
+body.kick-flash {
+    background: radial-gradient(circle, rgba(255, 0, 0, 0.8), #1a0b2e 50%);
+}
+
+body.snare-flash {
+    background: radial-gradient(circle, rgba(0, 255, 255, 0.8), #0d0518 50%);
+}
+
+body.hihat-flash {
+    background: radial-gradient(circle, rgba(255, 0, 255, 0.6), #1a0b2e 50%);
+}
+
+body.synth-flash {
+    background: radial-gradient(circle, rgba(0, 255, 0, 0.9), rgba(255, 255, 0, 0.5), #0d0518 70%);
+}

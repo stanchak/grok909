@@ -9,7 +9,9 @@ body {
     align-items: center;
     min-height: 100vh;
     overflow: auto;
-    transition: background-color 0.1s ease; /* Smooth flash transitions */
+    transition: background-color 0.1s ease;
+    margin-top: 20px;
+    position: relative;
 }
 
 h1 {
@@ -18,6 +20,7 @@ h1 {
     text-shadow: 4px 4px 0 #00ffff, -4px -4px 0 #00ffff;
     margin: 20px 0;
     letter-spacing: 4px;
+    position: relative;
 }
 
 .sequencer {
@@ -28,6 +31,7 @@ h1 {
     padding: 10px;
     background-color: #2a1a3d;
     box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+    transition: filter 0.1s ease;
 }
 
 .row {
@@ -40,7 +44,7 @@ h1 {
     border: 2px solid #666;
     background-color: #333;
     cursor: pointer;
-    transition: background-color 0.1s;
+    transition: background-color 0.1s, filter 0.1s;
 }
 
 .cell.on {
@@ -91,6 +95,23 @@ input[type="number"] {
     text-align: center;
 }
 
+/* Handle styling */
+.handle {
+    position: absolute;
+    bottom: 30px;
+    right: 20px;
+    font-size: 12px;
+    color: #00ffff;
+    text-decoration: none;
+    text-shadow: 2px 2px 0 #ff00ff, -2px -2px 0 #ff00ff;
+    letter-spacing: 2px;
+}
+
+.handle:hover {
+    color: #ff00ff;
+    text-shadow: 2px 2px 0 #00ffff, -2px -2px 0 #00ffff;
+}
+
 /* Flash effects */
 body.kick-flash {
     background: radial-gradient(circle, rgba(255, 0, 0, 0.8), #1a0b2e 50%);
@@ -102,8 +123,123 @@ body.snare-flash {
 
 body.hihat-flash {
     background: radial-gradient(circle, rgba(255, 0, 255, 0.6), #1a0b2e 50%);
+    animation: strobe 0.05s alternate 2;
 }
 
 body.synth-flash {
     background: radial-gradient(circle, rgba(0, 255, 0, 0.9), rgba(255, 255, 0, 0.5), #0d0518 70%);
+}
+
+/* Hue rotation on sequencer */
+.sequencer.hue-rotate {
+    filter: hue-rotate(360deg);
+    transition: filter 0.15s ease;
+}
+
+/* Glow pulse on title */
+h1.glow-pulse {
+    animation: glowPulse 0.1s ease;
+}
+
+/* Crazy shake and acid trail on title */
+h1.crazy-shake {
+    animation: crazyShake 0.15s linear;
+    text-shadow: 
+        4px 4px 0 #00ffff, 
+        -4px -4px 0 #00ffff,
+        8px 8px 10px rgba(255, 0, 255, 0.7),
+        -8px -8px 15px rgba(0, 255, 255, 0.5),
+        12px 12px 20px rgba(255, 255, 0, 0.3),
+        -12px -12px 25px rgba(255, 0, 0, 0.2);
+}
+
+/* Opposite shake and acid trail on handle */
+.handle.opposite-shake {
+    animation: oppositeShake 0.15s linear;
+    text-shadow: 
+        2px 2px 0 #ff00ff, 
+        -2px -2px 0 #ff00ff,
+        -4px -4px 5px rgba(255, 0, 255, 0.7),
+        4px 4px 7px rgba(0, 255, 255, 0.5),
+        -6px -6px 10px rgba(255, 255, 0, 0.3),
+        6px 6px 12px rgba(255, 0, 0, 0.2);
+}
+
+/* Animations */
+@keyframes crazyShake {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(5px, -5px) rotate(2deg); }
+    40% { transform: translate(-5px, 5px) rotate(-2deg); }
+    60% { transform: translate(8px, -3px) rotate(3deg); }
+    80% { transform: translate(-8px, 3px) rotate(-3deg); }
+    100% { transform: translate(0, 0); }
+}
+
+@keyframes oppositeShake {
+    0% { transform: translate(0, 0); }
+    20% { transform: translate(-5px, 5px) rotate(-2deg); }
+    40% { transform: translate(5px, -5px) rotate(2deg); }
+    60% { transform: translate(-8px, 3px) rotate(-3deg); }
+    80% { transform: translate(8px, -3px) rotate(3deg); }
+    100% { transform: translate(0, 0); }
+}
+
+@keyframes strobe {
+    0% { filter: brightness(1); }
+    100% { filter: brightness(2); }
+}
+
+@keyframes glowPulse {
+    0% { text-shadow: 4px 4px 0 #00ffff, -4px -4px 0 #00ffff; }
+    50% { text-shadow: 4px 4px 10px #00ffff, -4px -4px 10px #00ffff, 0 0 20px #ff00ff; }
+    100% { text-shadow: 4px 4px 0 #00ffff, -4px -4px 0 #00ffff; }
+}
+
+/* Responsive adjustments for mobile */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 36px;
+        margin: 10px 0;
+    }
+
+    .sequencer {
+        margin: 10px;
+        padding: 5px;
+        max-width: 100%;
+    }
+
+    .row {
+        flex-wrap: nowrap;
+    }
+
+    .cell {
+        width: 20px; /* Smaller cells to fit 16x4 grid (320px wide) */
+        height: 20px;
+        border: 1px solid #666; /* Thinner border for smaller size */
+    }
+
+    .controls {
+        flex-direction: column;
+        align-items: stretch;
+        margin: 10px;
+        gap: 10px;
+        position: relative; /* For handle positioning */
+    }
+
+    button, label {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    input[type="number"] {
+        width: 100%;
+    }
+
+    .handle {
+        position: static; /* Remove absolute positioning for vertical flow */
+        font-size: 10px;
+        text-align: right;
+        margin-top: 10px; /* Space above handle, below controls */
+        margin-right: 10px; /* Align with controls */
+    }
 }

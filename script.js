@@ -147,26 +147,45 @@ function playSynth() {
     osc.stop(audioCtx.currentTime + 0.15);
 }
 
-// Playback logic with flash effects
+// Generate random Matrix-style string
+function getMatrixGibberish(length) {
+    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=[]{}|;:,.<>?';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+        result += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return `%c${result}`; // %c for console styling
+}
+
+// Playback logic with effects and console spam
 function playStep() {
     sequence.forEach((row, rowIndex) => {
         if (row[currentStep]) {
+            const matrixStyle = 'color: #00ff00; font-family: monospace; font-size: 14px;';
             switch (rowIndex) {
                 case 0:
                     playKick();
                     flashBackground('kick-flash', 100);
+                    crazyShakeTitle('crazy-shake', 150);
+                    oppositeShakeHandle('opposite-shake', 150);
+                    console.log(getMatrixGibberish(20), matrixStyle);
                     break;
                 case 1:
                     playSnare();
                     flashBackground('snare-flash', 100);
+                    glowPulseTitle('glow-pulse', 100);
+                    console.log(getMatrixGibberish(15), matrixStyle);
                     break;
                 case 2:
                     playHihat();
                     flashBackground('hihat-flash', 50);
+                    console.log(getMatrixGibberish(10), matrixStyle);
                     break;
                 case 3:
                     playSynth();
                     flashBackground('synth-flash', 150);
+                    hueRotateSequencer('hue-rotate', 150);
+                    console.log(getMatrixGibberish(25), matrixStyle);
                     break;
             }
         }
@@ -187,11 +206,43 @@ function playStep() {
     }
 }
 
-// Flash background function
+// Effect functions
 function flashBackground(className, duration) {
     document.body.classList.add(className);
     setTimeout(() => {
         document.body.classList.remove(className);
+    }, duration);
+}
+
+function glowPulseTitle(className, duration) {
+    const title = document.querySelector('h1');
+    title.classList.add(className);
+    setTimeout(() => {
+        title.classList.remove(className);
+    }, duration);
+}
+
+function hueRotateSequencer(className, duration) {
+    const sequencer = document.querySelector('.sequencer');
+    sequencer.classList.add(className);
+    setTimeout(() => {
+        sequencer.classList.remove(className);
+    }, duration);
+}
+
+function crazyShakeTitle(className, duration) {
+    const title = document.querySelector('h1');
+    title.classList.add(className);
+    setTimeout(() => {
+        title.classList.remove(className);
+    }, duration);
+}
+
+function oppositeShakeHandle(className, duration) {
+    const handle = document.querySelector('.handle');
+    handle.classList.add(className);
+    setTimeout(() => {
+        handle.classList.remove(className);
     }, duration);
 }
 
@@ -211,6 +262,10 @@ function stopPlayback() {
     isPlaying = false;
     clearTimeout(timeoutId);
     document.querySelectorAll('.cell').forEach(cell => cell.classList.remove('playing'));
+    document.body.className = '';
+    document.querySelector('.sequencer').className = 'sequencer';
+    document.querySelector('h1').className = '';
+    document.querySelector('.handle').className = 'handle';
 }
 
 function updateGrid() {
